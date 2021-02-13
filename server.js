@@ -6,8 +6,7 @@ const mongoose = require("mongoose");
 // Create port for heroku and local
 const PORT = process.env.PORT || 3000;
 
-// Path using all files in model folders
-const db = require("./models");
+// // Path using all files in model folders
 
 const app = express();
 
@@ -18,16 +17,17 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost/workout", {
-    userNewUrlParser: true
+//Mongoose connect database
+mongoose.connect("mongodb://localhost/workout", {
+    useNewUrlParser: true,
 });
 
-
-//Routes
-//Api and HTML
+// routes
+app.use(require("./routes/htmRoutes.js"));
+app.use(require("./routes/apiRoutes.js"));
 
 app.listen(PORT, () => {
-    console.log('App running on port ${PORT}!');
+    console.log(`App running on port ${PORT}!`);
 })
 
 
